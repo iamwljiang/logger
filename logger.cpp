@@ -63,7 +63,7 @@ int	Logger::init(const char* log_level,const char* log_name,
 					const char *uid_str/*=NULL*/, const char* gid_str /*=NULL*/,
 					bool  flush/*=false*/,bool daysplit/*=false*/,long max_size/*=MAX_LOG_SIZE*/)
 {
-	if(inited) return true;
+	if(inited) return 0;
 	if(strlen(log_level) > 10) return -1;
 	if(strlen(log_name)  > MAX_PATH_LEN) return -2;
 	if(strlen(log_path)  > MAX_PATH_LEN) return -3;
@@ -147,7 +147,7 @@ int	Logger::init(const char* log_level,const char* log_name,
 #endif
 #endif
 	inited = true;
-	return true;
+	return 0;
 }
 
 void	Logger::op_error_of_what(const char* format,...)
@@ -367,6 +367,7 @@ bool	Logger::open_log_file()
 					(LPCTSTR)(big_filepath));
 #else
 				link(little_filepath,big_filepath);
+				unlink(little_filepath);
 #endif
 			}
 
@@ -376,7 +377,7 @@ bool	Logger::open_log_file()
 		strcpy(big_filepath , mov_path);
 		strcat(big_filepath , log_name);
 		char ext[3] = "";
-		sprintf(ext,".%d",i);
+		sprintf(ext,".%d",1);
 		strcat(big_filepath,ext);
 	
 		if(ACCESS(big_filepath) == 0){
@@ -395,6 +396,7 @@ bool	Logger::open_log_file()
 				(LPCTSTR)(big_filepath));
 #else
 			link(log_filepath,big_filepath);
+			unlink(log_filepath);
 #endif
 		}
 

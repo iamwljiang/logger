@@ -78,7 +78,7 @@ void test_multi_log(const char* level)
 void test_single_thread()
 {
 	long i = 0;
-	for(; i < 1000000; ++i){
+	for(; i < 10000; ++i){
 		test_log("debug");
 		test_log("info");
 		test_log("notice");
@@ -97,7 +97,7 @@ void* thread_func(void *data)
 #endif
 {
 	long i = 0;
-	for(; i < 100000; ++i){
+	for(; i < 5000; ++i){
 		test_multi_log("debug");
 		test_multi_log("info");
 		test_multi_log("notice");
@@ -140,7 +140,7 @@ void test_multi_thread(int n)
 		CloseHandle(thread_pools.at(i));
 #else
 		pthread_join(thread_pools.at(i),NULL);
-		int status;
+		//int status;
 	
 		//waitpid(thread_pools.at(i),&status,WNOHANG);
 #endif
@@ -149,9 +149,11 @@ void test_multi_thread(int n)
 int main()
 {	
 	multi_log.init("info","multi_run.log","./","./",NULL,NULL,false,false,1024*1024*5);
-	std::cout << "start test\n";
-	//test_single_thread();
+	std::cout << "start test single thread\n";
+	test_single_thread();
+	std::cout << "test single thread end\n";
+	std::cout << "start test multi thread\n";
 	test_multi_thread(5);
-	std::cout << "test end\n";
+	std::cout << "test multi thread end\n";
 	return 0;
 }

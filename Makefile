@@ -16,5 +16,7 @@ static:$(OBJ)
 	ar rcs liblogger.a $(OBJ)
 clean:
 	rm -rf *.o
+	rm -rf run.log*
+	rm -rf multi*.log*
 
 .PHONY:build-all

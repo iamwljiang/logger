@@ -61,8 +61,8 @@ const int EMERG = 128;
 #define ACCESS(file) access(file,F_OK)
 #endif
 
-const int MAX_PATH_LEN = 256;
-const int MAX_BUFFER_SIZE = 8192;
+const size_t MAX_PATH_LEN = 256;
+const size_t MAX_BUFFER_SIZE = 8192;
 const long MAX_LOG_SIZE = 1024*1024*10;
 
 #ifndef gid_t
