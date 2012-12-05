@@ -190,6 +190,8 @@ int		Logger::log(int log_level,const char* format,...)
 		log_level > LOG_LEVEL::EMERG)
 		return -2;
 
+	if(log_level > this->log_level) return 1;
+
 	try{
 		if(!open_log_file()){
 			return -3;
@@ -421,7 +423,7 @@ int	Logger::error(const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::ERR) return -2;
+	if(log_level > LOG_LEVEL::ERR) return -2;
 
 	try{
 		if(!open_log_file()){
@@ -461,7 +463,7 @@ int		Logger::info (const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::INFO) return -2;
+	if(log_level > LOG_LEVEL::INFO) return 1;
 
 	try{
 		if(!open_log_file()){
@@ -501,7 +503,7 @@ int		Logger::debug(const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::DEBUG) return -2;
+	if(log_level > LOG_LEVEL::DEBUG) return 1;
 
 	try{
 		if(!open_log_file()){
@@ -541,7 +543,7 @@ int		Logger::fatal(const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::FATAL) return -2;
+	if(log_level > LOG_LEVEL::FATAL) return 1;
 
 	try{
 		if(!open_log_file()){
@@ -581,7 +583,7 @@ int		Logger::emerg(const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::EMERG) return -2;
+	if(log_level > LOG_LEVEL::EMERG) return 1;
 
 	try{
 		if(!open_log_file()){
@@ -621,7 +623,7 @@ int		Logger::crit (const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::CRIT) return -2;
+	if(log_level > LOG_LEVEL::CRIT) return 1;
 
 	try{
 		if(!open_log_file()){
@@ -661,7 +663,7 @@ int			Logger::warn (const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::WARN) return -2;
+	if(log_level > LOG_LEVEL::WARN) return 1;
 
 	try{
 		if(!open_log_file()){
@@ -701,7 +703,7 @@ int			Logger::notice(const char* format,...)
 {
 	KmScopedLock lock(log_mutex);
 	if(!inited) return -1;
-	if(log_level < LOG_LEVEL::NOTICE) return -2;
+	if(log_level > LOG_LEVEL::NOTICE) return 1;
 
 	try{
 		if(!open_log_file()){
